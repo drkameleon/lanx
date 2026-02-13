@@ -1,0 +1,3 @@
+entry: {src/lanx}
+executable: {src/cli}
+requires: [>= 0.10.0]
