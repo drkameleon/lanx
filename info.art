@@ -1,0 +1,6 @@
+entry: {src/lanx}
+executable: {src/cli}
+depends: [
+    [mimetypes >= 0.0.4]
+]
+requires: [>= 0.10.0]
