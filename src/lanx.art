@@ -35,8 +35,7 @@ define :lanx [
 
     serveFile: method [filepath][
         content: read.binary filepath
-        ext: extract.extension filepath
-        ct: mimetype ext
+        ct: mimetype filepath
 
         contentType: (empty? ct)? -> "application/octet-stream"
                                   -> first ct
