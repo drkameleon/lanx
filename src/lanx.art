@@ -16,7 +16,7 @@ import "mimetypes"!
 ; Template
 ;-----------------------------------------------
 
-ListingTemplate: read ./"listing.html"
+ListingTemplate: read ./"templates/listing.html"
 
 ;-----------------------------------------------
 ; Main type
