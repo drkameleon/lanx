@@ -1,3 +1,16 @@
+;===============================================
+; Lanx
+;
+; Simple static file server
+; for Arturo
+
+; @file src/cli.art
+;
+; MIT License
+; (c) 2026 Yanis Zafirópulos
+;===============================================
+
+import ./"lanx.art"!
 
 server: to :lanx []!
 
