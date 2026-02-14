@@ -108,17 +108,3 @@ define :lanx [
             \handle req
     ]
 ]
-
-;-----------------------------------------------
-; Main
-;-----------------------------------------------
-
-if standalone? [
-    server: to :lanx []!
-
-    values: args\values
-    unless empty? values ->
-        server\root: values\0
-
-    server\start
-]
