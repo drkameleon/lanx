@@ -1,0 +1,127 @@
+;===============================================
+; FileServer.art
+;
+; Simple static file server
+; for Arturo
+;
+; MIT License
+; (c) 2026 Yanis Zafirópulos
+;===============================================
+
+import "mimetypes"!
+
+;-----------------------------------------------
+; Configuration
+;-----------------------------------------------
+
+Port: 18966
+
+;-----------------------------------------------
+; Helpers
+;-----------------------------------------------
+
+getRoot: function [][
+    values: args\values
+    (empty? values)? -> path\current
+                     -> values\0
+]
+
+serveFile: function [filepath][
+    content: read.binary filepath
+    ext: extract.extension filepath
+    ct: mimetype ext
+
+    contentType: (empty? ct)? -> "application/octet-stream"
+                              -> first ct
+
+    #[
+        body: to :string content
+        status: 200
+        headers: #[
+            "Content-Type": contentType
+        ]
+    ]
+]
+
+directoryListing: function [dirPath, urlPath][
+    items: list dirPath
+    
+    html: {<html><head>}
+    'html ++ ~{<title>Index of |urlPath|</title>}
+    'html ++ {<style>
+        body { font-family: monospace; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        a { text-decoration: none; color: #0366d6; }
+        a:hover { text-decoration: underline; }
+        li { padding: 4px 0; }
+    </style></head><body>}
+    'html ++ ~{<h2>Index of |urlPath|</h2><ul>}
+
+    ; parent directory link
+    if urlPath <> "/" ->
+        'html ++ {<li><a href="../">../</a></li>}
+
+    loop sort items 'item [
+        name: extract.basename item
+        unless hidden? item [
+            link: (directory? item)? -> name ++ "/"
+                                     -> name
+            'html ++ ~{<li><a href="|link|">|link|</a></li>}
+        ]
+    ]
+
+    'html ++ {</ul></body></html>}
+
+    #[
+        body: html
+        status: 200
+        headers: #[
+            "Content-Type": "text/html"
+        ]
+    ]
+]
+
+handleRequest: function [root, req][
+    reqPath: req\path
+
+    ; basic path traversal protection
+    if contains? reqPath ".." ->
+        return #[body: "Forbidden" status: 403 headers: #["Content-Type": "text/plain"]]
+
+    ; build the full filesystem path
+    fullPath: (reqPath = "/")? -> root
+                               -> root ++ reqPath
+
+    ; if it's a directory, look for index.html or list contents
+    if and? [exists? fullPath][directory? fullPath] [
+        indexPath: fullPath ++ "/index.html"
+        if exists? indexPath ->
+            return serveFile indexPath
+
+        return directoryListing fullPath reqPath
+    ]
+
+    ; serve the file if it exists
+    if and? [exists? fullPath][file? fullPath] ->
+        return serveFile fullPath
+
+    ; 404
+    #[body: "Not Found" status: 404 headers: #["Content-Type": "text/plain"]]
+]
+
+;-----------------------------------------------
+; Main
+;-----------------------------------------------
+
+if standalone? [
+    root: getRoot
+
+    unless directory? root [
+        print ~"Error: '|root|' is not a valid directory."
+        exit
+    ]
+
+    print ~" :: Serving |root|"
+
+    serve .port: Port $[req] ->
+        handleRequest root req
+]
