@@ -1,0 +1,34 @@
+<html>
+<head>
+    <title>Index of <||= urlPath ||></title>
+    <style>
+        body { 
+            font-family: monospace; 
+            max-width: 800px; 
+            margin: 40px auto; 
+            padding: 0 20px; 
+        }
+        a { 
+            text-decoration: none; 
+            color: #0366d6; 
+        }
+        a:hover { 
+            text-decoration: underline; 
+        }
+        li { 
+            padding: 4px 0; 
+        }
+    </style>
+</head>
+<body>
+    <h2>Index of <||= urlPath ||></h2>
+    <ul>
+        <|| if urlPath <> "/" [ ||>
+            <li><a href="../">../</a></li>
+        <|| ] ||>
+        <|| loop entries 'entry [ ||>
+            <li><a href="<||= entry ||>"><||= entry ||></a></li>
+        <|| ] ||>
+    </ul>
+</body>
+</html>
