@@ -1,63 +1,63 @@
 name: "Build & Test"
 on:
-	push:
-		branches:
-			- '**'
-		tags-ignore:
-			- '**'
-	pull_request:
-		paths-ignore:
-			- 'docs/*'
-			- '*.yml'
-			- '*.md'
-			- 'LICENSE'
+    push:
+        branches:
+            - '**'
+        tags-ignore:
+            - '**'
+    pull_request:
+        paths-ignore:
+            - 'docs/*'
+            - '*.yml'
+            - '*.md'
+            - 'LICENSE'
 
-jobs:  
-	build:
-		name: ${{ matrix.name }}
-		runs-on: ubuntu-latest
+jobs:
+    build:
+        name: ${{ matrix.name }}
+        runs-on: ubuntu-latest
 
-		steps:
-			- name: "Cancel similar actions in progress"
-				uses: styfle/cancel-workflow-action@0.6.0
-				with:
-					access_token: ${{ github.token }}
+        steps:
+            - name: "Cancel similar actions in progress"
+              uses: styfle/cancel-workflow-action@0.6.0
+              with:
+                  access_token: ${{ github.token }}
 
-			- name: "Setup Arturo"
-				uses: arturo-lang/setup-arturo@main
-				with:
-					token: ${{ secrets.GITHUB_TOKEN }}
+            - name: "Setup Arturo"
+              uses: arturo-lang/setup-arturo@main
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
 
-			- name: "Checkout"
-				uses: actions/checkout@main
-				with:
-					submodules: recursive
+            - name: "Checkout"
+              uses: actions/checkout@main
+              with:
+                  submodules: recursive
 
-			- name: Run unit tests
-				run: |
-                    # start server in background    
-                    arturo src/cli.art test &
-                    SERVER_PID=$!
-                    
-                    # wait for it to be ready
-                    for i in $(seq 1 30); do
-                        curl -s http://localhost:18966/ > /dev/null 2>&1 && break
-                        sleep 0.5
-                    done
-                    
-                    # test HTML serves correctly
-                    curl -s -o /tmp/index.html http://localhost:18966/
-                    diff <(cat test/index.html) /tmp/index.html
-                    
-                    # test binary file integrity 
-                    curl -s -o /tmp/test.jpg http://localhost:18966/test.jpg
-                    cmp test/test.jpg /tmp/test.jpg
-                    
-                    # test directory listing returns 200
-                    curl -s -o /dev/null -w "%{http_code}" http://localhost:18966/subfolder/ | grep -q 200
-                    
-                    # test 404
-                    curl -s -o /dev/null -w "%{http_code}" http://localhost:18966/nope | grep -q 404
-                    
-                    # cleanup
-                    kill $SERVER_PID
+            - name: Run unit tests
+              run: |
+                  # start server in background
+                  arturo src/cli.art test &
+                  SERVER_PID=$!
+
+                  # wait for it to be ready
+                  for i in $(seq 1 30); do
+                      curl -s http://localhost:18966/ > /dev/null 2>&1 && break
+                      sleep 0.5
+                  done
+
+                  # test HTML serves correctly
+                  curl -s -o /tmp/index.html http://localhost:18966/
+                  diff <(cat test/index.html) /tmp/index.html
+
+                  # test binary file integrity
+                  curl -s -o /tmp/test.jpg http://localhost:18966/test.jpg
+                  cmp test/test.jpg /tmp/test.jpg
+
+                  # test directory listing returns 200
+                  curl -s -o /dev/null -w "%{http_code}" http://localhost:18966/subfolder/ | grep -q 200
+
+                  # test 404
+                  curl -s -o /dev/null -w "%{http_code}" http://localhost:18966/nope | grep -q 404
+
+                  # cleanup
+                  kill $SERVER_PID
