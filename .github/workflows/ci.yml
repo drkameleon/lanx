@@ -49,6 +49,11 @@ jobs:
                 curl -s -o /tmp/index.html http://localhost:18966/
                 diff <(cat test/index.html) /tmp/index.html
 
+                # test CSS serves correctly with correct mimetype
+                curl -s -o /tmp/style.css -D /tmp/style.headers http://localhost:18966/style.css
+                diff <(cat test/style.css) /tmp/style.css
+                grep -qi "content-type: text/css" /tmp/style.headers
+
                 # test binary file integrity
                 # curl -s -o /tmp/test.jpg http://localhost:18966/test.jpg
                 # cmp test/test.jpg /tmp/test.jpg
