@@ -91,14 +91,7 @@ define :lanx [
 
         if and? [exists? fullPath][directory? fullPath] [
             unless suffix? reqPath "/" ->
-                return #[
-                    body: ""
-                    status: 301
-                    headers: #[
-                        "Content-Type": "text/html"
-                        "Location": reqPath ++ "/"
-                    ]
-                ]
+                return \redirect reqPath ++ "/"
 
             indexPath: fullPath ++ "/index.html"
             if exists? indexPath ->
