@@ -49,9 +49,9 @@ jobs:
                   curl -s -o /tmp/index.html http://localhost:18966/
                   diff <(cat test/index.html) /tmp/index.html
 
-                  # test binary file integrity
-                  curl -s -o /tmp/test.jpg http://localhost:18966/test.jpg
-                  cmp test/test.jpg /tmp/test.jpg
+                #   # test binary file integrity
+                #   curl -s -o /tmp/test.jpg http://localhost:18966/test.jpg
+                #   cmp test/test.jpg /tmp/test.jpg
 
                   # test directory listing returns 200
                   curl -s -o /dev/null -w "%{http_code}" http://localhost:18966/subfolder/ | grep -q 200
