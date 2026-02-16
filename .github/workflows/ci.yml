@@ -52,6 +52,7 @@ jobs:
             - name: "Setup Arturo"
               uses: arturo-lang/setup-arturo@main
               with:
+                from: latest
                 token: ${{ secrets.GITHUB_TOKEN }}
                 os: ${{ matrix.os }}
                 arch: ${{ matrix.arch }}
