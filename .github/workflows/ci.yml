@@ -14,8 +14,29 @@ on:
 
 jobs:
     build:
-        name: ${{ matrix.name }}
-        runs-on: ubuntu-latest
+        name: Test
+        runs-on: ${{ 
+            (matrix.os == 'linux')   && (matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest') ||
+            (matrix.os == 'macos')   && (matrix.arch == 'arm64' && 'macos-latest' || 'macOS-15-intel') ||
+            (matrix.os == 'windows') && 'windows-latest' || 
+                                        'ubuntu-latest'  }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include: 
+                    - {os: linux,   arch: amd64}
+                    - {os: linux,   arch: arm64}
+                    - {os: freebsd, arch: amd64}
+                    - {os: macos,   arch: amd64}
+                    - {os: macos,   arch: arm64}
+                    - {os: windows, arch: amd64}
+                    
+        defaults:
+            run:
+                shell: ${{ 
+                    (matrix.os == 'freebsd') && 'freebsd {0}' ||
+                    (matrix.os == 'windows') && 'msys2 {0}'   || 
+                                                'bash'        }}
 
         steps:
             - name: "Cancel similar actions in progress"
