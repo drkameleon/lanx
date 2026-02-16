@@ -40,7 +40,7 @@ define :lanx [
         contentType: (empty? ct)? -> "application/octet-stream"
                                   -> first ct
         #[
-            body: to :string content
+            body: content
             status: 200
             headers: #[
                 "Content-Type": contentType
