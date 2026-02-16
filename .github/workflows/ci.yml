@@ -58,6 +58,8 @@ jobs:
 
             - name: Run tests
               run: |
+                cd $GITHUB_WORKSPACE
+                
                 # start server in background
                 arturo src/cli.art test &
                 SERVER_PID=$!
