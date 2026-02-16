@@ -27,6 +27,8 @@ define :lanx [
     init: method [][
         \root: path\current
         \port: 18966
+
+        \fixedBinary?: sys\version > 0.10.0
     ]
 
     ;-------------------------------------------
@@ -39,6 +41,10 @@ define :lanx [
 
         contentType: (empty? ct)? -> "application/octet-stream"
                                   -> first ct
+
+        unless \fixedBinary? ->
+            content: to :string content
+        
         #[
             body: content
             status: 200
