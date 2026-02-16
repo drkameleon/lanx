@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Server Test</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Server Test Page</h1>
+		<p class="status">If you can read this, <strong>HTML</strong> is being served correctly.</p>
+
+		<div class="check">
+			<h2>CSS</h2>
+			<p>If this page has styles applied, <strong>CSS</strong> is loading correctly.</p>
+		</div>
+
+		<div class="check">
+			<h2>Image</h2>
+			<img src="test.jpg" alt="test image" onerror="this.closest('.check').classList.add('fail'); this.insertAdjacentHTML('afterend', '<p class=\'error\'>⚠ Image failed to load from test.png</p>')">
+			<p>If you see an image above, <strong>static assets</strong> are loading correctly.</p>
+		</div>
+
+		<div class="check">
+  			<h2>Subpage</h2>
+  			<p>Test if subdirectory routing works correctly.</p>
+  			<a href="subfolder/" class="nav-link">
+    			<span class="nav-link-icon">📁</span>
+    			<span class="nav-link-text">
+      				<strong>subfolder/</strong>
+      				<small>Click to test subpage serving</small>
+   	 			</span>
+    			<span class="nav-link-arrow">→</span>
+  			</a>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,143 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    background: #fafafa;
+    color: #1a1a1a;
+    padding: 3rem 1.5rem;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 580px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 1.4rem;
+    font-weight: normal;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.status {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.check {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+}
+
+.check h2 {
+    font-size: 0.7rem;
+    font-weight: normal;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 0.6rem;
+}
+
+.check p {
+    font-size: 0.92rem;
+    color: #444;
+}
+
+.check p + p {
+    margin-top: 0.5rem;
+}
+
+.check.fail {
+    border-color: #e0b0b0;
+    background: #fdf8f8;
+}
+
+img {
+    max-width: 180px;
+    display: block;
+    margin: 0.75rem 0;
+    border: 1px solid #eee;
+    border-radius: 3px;
+}
+
+a {
+    color: #1a1a1a;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+a:hover {
+    color: #555;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #f7f7f7;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #1a1a1a;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.nav-link:hover {
+    background: #f0f0f0;
+    border-color: #ccc;
+    color: #1a1a1a;
+}
+
+.nav-link-icon {
+    font-size: 1rem;
+    opacity: 0.5;
+}
+
+.nav-link-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.1rem;
+}
+
+.nav-link-text strong {
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+}
+
+.nav-link-text small {
+    color: #aaa;
+    font-size: 0.75rem;
+    font-family: 'Georgia', serif;
+}
+
+.nav-link-arrow {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+.nav-link:hover .nav-link-arrow {
+    color: #888;
+}
+
+.error {
+    color: #b94a4a;
+    font-size: 0.88rem;
+    margin-top: 0.5rem;
+}

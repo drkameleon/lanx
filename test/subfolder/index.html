@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Server Test</title>
+	<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+	<div class="container">
+		<h1>This is a subfolder test page</h1>
+		<p class="status">If you can read this, <strong>subpages</strong> are being served correctly too.</p>
+
+		<div class="check">
+            <h2>File listing</h2>
+            <p>Test if directory listing is working correctly.</p>
+            <a href="listing" class="nav-link">
+                <span class="nav-link-icon">📄</span>
+                <span class="nav-link-text">
+                    <strong>listing</strong>
+                    <small>Click to test file listing</small>
+                </span>
+                <span class="nav-link-arrow">→</span>
+            </a>
+        </div>
+
+        <div class="check">
+            <a href=".." class="nav-link">
+                <span class="nav-link-icon">⬆️</span>
+                <span class="nav-link-text">
+                    <strong>../</strong>
+                    <small>Go back to parent directory</small>
+                </span>
+                <span class="nav-link-arrow">→</span>
+            </a>
+        </div>
+	</div>
+</body>
+</html>
