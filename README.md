@@ -28,7 +28,7 @@
 
 ### What does this package do?
 
-Lanx is a minimal static file server for Arturo. Point it at a folder and it will serve its contents over HTTP - with automatic MIME type detection, directory listings, and `index.html` support — no configuration needed.
+Lanx is a minimal static file server for Arturo. Point it at a folder and it will serve its contents over HTTP - with automatic MIME type detection, directory listings, and `index.html` support; no configuration needed! 😉
 
 ### How do I use it?
 
