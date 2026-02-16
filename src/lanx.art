@@ -69,6 +69,17 @@ define :lanx [
         ]
     ]
 
+    redirect: method [target][
+        #[
+            body: ""
+            status: 301
+            headers: #[
+                "Content-Type": "text/html"
+                "Location": target
+            ]
+        ]
+    ]
+
     handle: method [req][
         reqPath: req\path
 
