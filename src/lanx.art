@@ -76,9 +76,19 @@ define :lanx [
             return #[body: "Forbidden" status: 403 headers: #["Content-Type": "text/plain"]]
 
         fullPath: (reqPath = "/")? -> \root
-                                   -> \root ++ reqPath
+                                -> \root ++ reqPath
 
         if and? [exists? fullPath][directory? fullPath] [
+            unless suffix? reqPath "/" ->
+                return #[
+                    body: ""
+                    status: 301
+                    headers: #[
+                        "Content-Type": "text/html"
+                        "Location": reqPath ++ "/"
+                    ]
+                ]
+
             indexPath: fullPath ++ "/index.html"
             if exists? indexPath ->
                 return \serveFile indexPath
