@@ -83,8 +83,8 @@ jobs:
                 grep -qi "content-type: text/css" /tmp/style.headers
 
                 # test binary file integrity
-                # curl -s -o /tmp/test.jpg http://localhost:18966/test.jpg
-                # cmp test/test.jpg /tmp/test.jpg
+                curl -s -o /tmp/test.jpg http://localhost:18966/test.jpg
+                cmp test/test.jpg /tmp/test.jpg
 
                 # test directory listing returns 200
                 curl -s -o /dev/null -w "%{http_code}" http://localhost:18966/subfolder/ | grep -q 200
