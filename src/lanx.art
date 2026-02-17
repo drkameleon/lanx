@@ -118,7 +118,7 @@ define :lanx [
 
     start: method [][
         unless absolute? \root ->
-            \root: normalize path\current ++ "/" ++ \root
+            \root: normalize join.path @[path\current, \root]
 
         unless directory? \root [
             print ~"Error: '|\root|' is not a valid directory."
