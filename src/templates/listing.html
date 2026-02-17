@@ -23,7 +23,7 @@
 <body>
     <h2>Index of <||= urlPath ||></h2>
     <ul>
-        <|| if urlPath <> "/" [ ||>
+        <|| unless urlPath = "/" [ ||>
             <li><a href="../">../</a></li>
         <|| ] ||>
         <|| loop entries 'entry [ ||>
