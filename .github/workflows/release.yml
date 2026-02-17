@@ -1,0 +1,64 @@
+##############################################
+# App information
+##############################################
+env:
+    app-name: lanx
+    app-entry: src/cli.art
+    app-notes: auto
+##############################################
+ 
+# > if there is no serious reason, better not
+#   change anything below this line! ;-)
+
+name: Release
+
+on:
+    push:
+      tags:
+        - 'v*.*.*'
+
+concurrency: 
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    Bundle:
+        runs-on: ${{ 
+            (matrix.os == 'linux')   && (matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest') ||
+            (matrix.os == 'macos')   && (matrix.arch == 'arm64' && 'macos-latest' || 'macos-15-intel') ||
+            (matrix.os == 'windows') && 'windows-latest' ||
+            (matrix.os == 'freebsd') && 'ubuntu-latest' ||
+                                        'ubuntu-latest' }}
+        strategy:
+            matrix:
+                include:
+                    - {os: linux,   arch: amd64}
+                    - {os: linux,   arch: arm64}
+                    - {os: macos,   arch: amd64}
+                    - {os: macos,   arch: arm64}
+                    - {os: windows, arch: amd64}
+                    - {os: freebsd, arch: amd64}
+        
+        steps:
+            - uses: actions/checkout@v4
+            - uses: arturo-lang/bundler@v2
+              with: 
+                token: ${{ secrets.GITHUB_TOKEN }}
+                os: ${{ matrix.os }}
+                arch: ${{ matrix.arch }}
+                entry: ${{ env.app-entry }}
+                target: ${{ env.app-name }}
+                version: ${{ github.ref_name }}
+                release: 'true'
+
+    Publish:
+        runs-on: ubuntu-latest
+        if: ${{ always() }}
+        needs: Bundle
+        steps:
+            - uses: actions/checkout@v4
+            - uses: arturo-lang/bundler-releases@main
+              with:
+                token: ${{ secrets.GITHUB_TOKEN }}
+                name: ${{ env.app-name }}
+                notes: ${{ env.app-notes }}
