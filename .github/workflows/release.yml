@@ -46,6 +46,7 @@ jobs:
                 token: ${{ secrets.GITHUB_TOKEN }}
                 os: ${{ matrix.os }}
                 arch: ${{ matrix.arch }}
+                from: master                        # replace with latest
                 entry: ${{ env.app-entry }}
                 target: ${{ env.app-name }}
                 version: ${{ github.ref_name }}
