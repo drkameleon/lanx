@@ -10,7 +10,7 @@
 ; (c) 2026 Yanis Zafirópulos
 ;===============================================
 
-import ./"lanx.art"!
+import ./{lanx}
 
 server: to :lanx []!
 
